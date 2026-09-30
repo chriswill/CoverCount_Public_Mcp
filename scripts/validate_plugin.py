@@ -65,7 +65,8 @@ def validate(root, server_source=None):
     require(set(portable["extensions"]) == {"com.openai"}, "Unexpected extension")
     require(set(portable["extensions"]["com.openai"]) == {"interface"}, "Unexpected OpenAI extension fields")
     require(set(codex) == shared | {"skills", "mcpServers", "interface"}, "Unexpected Codex fields")
-    require(set(claude) == shared | {"skills", "mcpServers"}, "Unexpected Claude fields")
+    require(set(claude) == shared | {"skills", "mcpServers", "privacyPolicyUrl"}, "Unexpected Claude fields")
+    require(claude["privacyPolicyUrl"] == "https://www.covercount.io/privacy", "Wrong Claude privacy policy")
     for manifest in (codex, claude):
         require(all(manifest.get(key) == portable[key] for key in shared), "Manifest metadata/version mismatch")
         require(manifest["skills"] == "./skills/" and manifest["mcpServers"] == "./.mcp.json", "Wrong component paths")
@@ -77,10 +78,16 @@ def validate(root, server_source=None):
         require(interface.get(key) == path, f"Wrong asset path: {key}")
         svg = ET.fromstring(read_file(root, path[2:]))
         require(svg.tag == "{http://www.w3.org/2000/svg}svg", f"Not SVG: {path}")
-        require(not any(node.tag.rsplit("}", 1)[-1] in {"script", "foreignObject"} for node in svg.iter()), f"Active SVG: {path}")
+        require(not any(node.tag.rsplit("}", 1)[-1].lower() in
+                        {"script", "foreignobject", "style", "animate", "animatemotion", "animatetransform", "set", "discard"}
+                        for node in svg.iter()), f"Active/styled SVG: {path}")
         require(not any(key.rsplit("}", 1)[-1].lower().startswith("on") or
+                        key.rsplit("}", 1)[-1].lower() == "style" or
                         (key.rsplit("}", 1)[-1] == "href" and not value.startswith("#"))
                         for node in svg.iter() for key, value in node.attrib.items()), f"External/active SVG: {path}")
+        require(not any(not re.fullmatch(r"\s*['\"]?#[A-Za-z_][\w:.-]*['\"]?\s*", target)
+                        for node in svg.iter() for value in node.attrib.values()
+                        for target in re.findall(r"url\((.*?)\)", value, re.IGNORECASE)), f"External SVG reference: {path}")
 
     expected_mcp = {"mcpServers": {NAME: {"type": "http", "url": ENDPOINT}}}
     require(json_file(root, ".mcp.json") == expected_mcp, "Wrong anonymous connection or unexpected credentials/settings")

@@ -41,6 +41,37 @@ class ValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "connection"):
             validator.validate(self.root)
 
+    def test_directory_incompatible_svg_is_rejected(self):
+        cases = [
+            '<style>.color { fill: red; }</style>',
+            '<path style="fill:red"/>',
+            '<animate attributeName="opacity"/>',
+            '<animateTransform attributeName="transform"/>',
+            '<set attributeName="fill" to="red"/>',
+            '<path onclick="run()"/>',
+            '<foreignObject/>',
+            '<script/>',
+            '<use href="https://example.com/icon.svg#mark"/>',
+            '<path fill="url(https://example.com/colors.svg#red)"/>',
+        ]
+        for fragment in cases:
+            with self.subTest(fragment=fragment):
+                (self.root / 'assets/icon.svg').write_text(
+                    '<svg xmlns="http://www.w3.org/2000/svg">' + fragment + '</svg>', encoding='utf-8')
+                with self.assertRaisesRegex(ValueError, "SVG"):
+                    validator.validate(self.root)
+
+    def test_fragment_svg_reference_is_allowed(self):
+        (self.root / 'assets/icon.svg').write_text(
+            '<svg xmlns="http://www.w3.org/2000/svg"><defs><path id="mark" d="M0 0"/></defs>'
+            '<use href="#mark"/></svg>', encoding='utf-8')
+        validator.validate(self.root)
+
+    def test_wrong_claude_privacy_policy_is_rejected(self):
+        self.change_json('.claude-plugin/plugin.json', lambda value: value.update(privacyPolicyUrl='https://example.com'))
+        with self.assertRaisesRegex(ValueError, 'privacy policy'):
+            validator.validate(self.root)
+
     def test_auth_header_is_rejected(self):
         self.change_json("mcp.json", lambda value: value["mcpServers"][validator.NAME].update(headers={"Authorization": "test-secret"}))
         with self.assertRaisesRegex(ValueError, "connection"):

@@ -26,7 +26,7 @@ profile fields do not establish that the venue lacks those details.
 
 ## Install and review
 
-Version **0.2.0**, release candidate. Requires the public server contract implemented
+Version **0.2.1**, release candidate. Requires the public server contract implemented
 in **0.4.0** or a compatible later version at
 `https://mcp.covercount.io/explore/mcp`. Client installation, skill activation and
 hosted acceptance are recorded separately; local package validation does not prove them.

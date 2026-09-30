@@ -7,7 +7,7 @@ client can still require its own account or administrator access.
 
 ## OpenAI: ChatGPT and Codex
 
-Use `covercount-explore-openai-0.2.0.zip`. It contains one `covercount-explore/`
+Use `covercount-explore-openai-0.2.1.zip`. It contains one `covercount-explore/`
 plugin directory with portable root `plugin.json`, `mcp.json`, all three skills
 and assets. A `.codex-plugin/plugin.json` / `.mcp.json` compatibility pair is also
 included. All formats refer to the same anonymous endpoint.
@@ -27,7 +27,7 @@ Current documentation: [OpenAI packaging](https://developers.openai.com/plugins/
 
 ## Claude Code
 
-Use `covercount-explore-claude-0.2.0.zip` or this checkout. Extract the archive and
+Use `covercount-explore-claude-0.2.1.zip` or this checkout. Extract the archive and
 point Claude Code at its `covercount-explore` directory:
 
 ```powershell
@@ -39,6 +39,12 @@ The Claude package contains `.claude-plugin/plugin.json`, `.mcp.json`, the same
 three skills and assets. In a fresh session, verify the connection and naturally
 phrased requests. Explicit skill invocation alone does not establish automatic
 activation. See the [Claude manifest reference](https://code.claude.com/docs/en/plugins-reference).
+
+For Claude directory submission, use the Claude archive. It omits the portable root
+`plugin.json` and Codex manifest. The full source checkout intentionally contains
+all client formats; Claude's warning that it ignores the agent-plugins.org root
+manifest is informational. Claude reads `.claude-plugin/plugin.json`, which explicitly
+sets `privacyPolicyUrl`. SVG assets use direct fill attributes without embedded styles.
 
 ## Claude chat / Cowork
 

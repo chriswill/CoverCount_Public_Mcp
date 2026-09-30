@@ -1,6 +1,6 @@
 {
   "name": "covercount-explore",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Find public reservation openings, events and places. Finish booking on CoverCount.",
   "author": {
     "name": "CoverCount",
@@ -15,5 +15,6 @@
     "guest-discovery"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json"
+  "mcpServers": "./.mcp.json",
+  "privacyPolicyUrl": "https://www.covercount.io/privacy"
 }
