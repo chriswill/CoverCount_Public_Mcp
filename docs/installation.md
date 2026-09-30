@@ -7,7 +7,7 @@ client can still require its own account or administrator access.
 
 ## OpenAI: ChatGPT and Codex
 
-Use `covercount-explore-openai-0.2.1.zip`. It contains one `covercount-explore/`
+Use `covercount-explore-openai-0.2.2.zip`. It contains one `covercount-explore/`
 plugin directory with portable root `plugin.json`, `mcp.json`, all three skills
 and assets. A `.codex-plugin/plugin.json` / `.mcp.json` compatibility pair is also
 included. All formats refer to the same anonymous endpoint.
@@ -27,7 +27,7 @@ Current documentation: [OpenAI packaging](https://developers.openai.com/plugins/
 
 ## Claude Code
 
-Use `covercount-explore-claude-0.2.1.zip` or this checkout. Extract the archive and
+Use `covercount-explore-claude-0.2.2.zip` or this checkout. Extract the archive and
 point Claude Code at its `covercount-explore` directory:
 
 ```powershell

@@ -1,6 +1,6 @@
 {
   "name": "covercount-explore",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Find public reservation openings, events and places. Finish booking on CoverCount.",
   "author": {
     "name": "CoverCount",
@@ -36,5 +36,6 @@
     "composerIcon": "./assets/icon.svg",
     "logo": "./assets/logo.svg",
     "logoDark": "./assets/logo-dark.svg"
-  }
+  },
+  "repository": "https://github.com/chriswill/CoverCount_Public_Mcp"
 }

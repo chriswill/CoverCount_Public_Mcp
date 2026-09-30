@@ -1,6 +1,6 @@
 # Release and submission materials
 
-Release candidate: **covercount-explore 0.2.1**. Server contract: **0.4.0** or
+Release candidate: **covercount-explore 0.2.2**. Server contract: **0.4.0** or
 compatible later. This document prepares submission; it does not record publication.
 
 ## Listing copy
@@ -15,6 +15,10 @@ on CoverCount. Search does not book or hold anything. No CoverCount account is n
 for discovery. Availability and payment requirements are rechecked on the website.
 
 **Publisher:** CoverCount. **Website:** https://explore.covercount.io/
+
+**Documentation:** https://www.covercount.io/learn/connected-apps/covercount-explore
+
+**Repository:** https://github.com/chriswill/CoverCount_Public_Mcp
 
 **Support:** https://support.cloudscope.io/
 
@@ -49,7 +53,7 @@ external geocoding. Public cache/budget housekeeping creates no guest bookings.
 Use **packaged skill upload**, not MCP skill import. Submit the remote endpoint
 through the MCP submission flow and attach the packaged skills to the same plugin
 draft. The OpenAI archive provides the local combined plugin;
-`covercount-explore-skills-0.2.1.zip` provides the three skill folders when skill
+`covercount-explore-skills-0.2.2.zip` provides the three skill folders when skill
 upload is requested. Bind only a real registered connection identity assigned by
 the portal; no placeholder `.app.json` is supplied. See
 [OpenAI skill delivery](https://developers.openai.com/plugins/build/skills).

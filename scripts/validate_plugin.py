@@ -57,16 +57,19 @@ def validate(root, server_source=None):
     claude = json_file(root, ".claude-plugin/plugin.json")
     version = portable.get("version", "")
     require(bool(re.fullmatch(r"\d+\.\d+\.\d+", version)), "Invalid plugin version")
-    shared = {"name", "version", "description", "author", "homepage", "license", "keywords"}
+    shared = {"name", "version", "description", "author", "homepage", "repository", "license", "keywords"}
     require(set(portable) == shared | {"$schema", "extensions"}, "Unexpected portable manifest fields")
     require(portable["$schema"] == "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json", "Wrong portable schema")
     require(portable["name"] == NAME, "Wrong Explore identity")
     require(portable["homepage"] == "https://explore.covercount.io/", "Wrong Explore homepage")
+    require(portable["repository"] == "https://github.com/chriswill/CoverCount_Public_Mcp", "Wrong Explore repository")
     require(set(portable["extensions"]) == {"com.openai"}, "Unexpected extension")
     require(set(portable["extensions"]["com.openai"]) == {"interface"}, "Unexpected OpenAI extension fields")
     require(set(codex) == shared | {"skills", "mcpServers", "interface"}, "Unexpected Codex fields")
-    require(set(claude) == shared | {"skills", "mcpServers", "privacyPolicyUrl"}, "Unexpected Claude fields")
+    require(set(claude) == shared | {"skills", "mcpServers", "privacyPolicyUrl", "documentationUrl", "displayName"}, "Unexpected Claude fields")
+    require(claude["displayName"] == "CoverCount Explore", "Wrong Claude display name")
     require(claude["privacyPolicyUrl"] == "https://www.covercount.io/privacy", "Wrong Claude privacy policy")
+    require(claude["documentationUrl"] == "https://www.covercount.io/learn/connected-apps/covercount-explore", "Wrong Explore documentation")
     for manifest in (codex, claude):
         require(all(manifest.get(key) == portable[key] for key in shared), "Manifest metadata/version mismatch")
         require(manifest["skills"] == "./skills/" and manifest["mcpServers"] == "./.mcp.json", "Wrong component paths")

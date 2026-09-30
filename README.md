@@ -26,7 +26,7 @@ profile fields do not establish that the venue lacks those details.
 
 ## Install and review
 
-Version **0.2.1**, release candidate. Requires the public server contract implemented
+Version **0.2.2**, release candidate. Requires the public server contract implemented
 in **0.4.0** or a compatible later version at
 `https://mcp.covercount.io/explore/mcp`. Client installation, skill activation and
 hosted acceptance are recorded separately; local package validation does not prove them.
@@ -69,3 +69,7 @@ a SHA-256 inventory. It never installs or publishes anything.
 Plugin manifests, skills and documentation use the Apache License, Version 2.0;
 see [LICENSE.txt](LICENSE.txt). That license does not grant rights to the CoverCount
 name, logos or other brand assets in `assets/` (Section 6).
+
+Guest documentation: [CoverCount Explore setup and usage](https://www.covercount.io/learn/connected-apps/covercount-explore).
+
+Source repository: [CoverCount Explore on GitHub](https://github.com/chriswill/CoverCount_Public_Mcp).
