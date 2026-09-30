@@ -1,0 +1,43 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "covercount-explore",
+  "version": "0.2.0",
+  "description": "Find public reservation openings, events and places. Finish booking on CoverCount.",
+  "author": {
+    "name": "CoverCount",
+    "url": "https://www.covercount.io/"
+  },
+  "homepage": "https://explore.covercount.io/",
+  "license": "Apache-2.0",
+  "keywords": [
+    "reservations",
+    "events",
+    "places",
+    "guest-discovery"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "CoverCount Explore",
+        "shortDescription": "Find places, events and reservation openings.",
+        "longDescription": "Discover public places, events and reservation openings by location and visit details. Check a selected opening's card requirement, then finish booking on CoverCount. Search does not book or hold anything. No CoverCount account is needed for discovery.",
+        "developerName": "CoverCount",
+        "category": "Lifestyle",
+        "capabilities": [
+          "Interactive"
+        ],
+        "websiteURL": "https://explore.covercount.io/",
+        "privacyPolicyURL": "https://www.covercount.io/privacy",
+        "termsOfServiceURL": "https://www.covercount.io/terms-of-service",
+        "defaultPrompt": [
+          "Find a tasting reservation for four in Napa tomorrow afternoon.",
+          "What public events are in Paso Robles this weekend?",
+          "Help me discover wineries near Sonoma."
+        ],
+        "composerIcon": "./assets/icon.svg",
+        "logo": "./assets/logo.svg",
+        "logoDark": "./assets/logo-dark.svg"
+      }
+    }
+  }
+}

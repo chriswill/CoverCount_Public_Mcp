@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "covercount-explore": {
+      "type": "http",
+      "url": "https://mcp.covercount.io/explore/mcp"
+    }
+  }
+}

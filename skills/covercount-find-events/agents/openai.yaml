@@ -1,0 +1,11 @@
+interface:
+  display_name: "CoverCount Explore: Find Events"
+  short_description: "Discover public events and upcoming dates"
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "covercount-explore"
+      description: "Anonymous CoverCount public discovery and website handoff"
+      transport: "streamable_http"
+      url: "https://mcp.covercount.io/explore/mcp"
