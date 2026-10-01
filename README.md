@@ -23,11 +23,14 @@ automatic monitoring or schedules.
 For a selected venue, the public profile provides its description, menu/website,
 address, public contact details, photos and local hours when supplied. Missing
 profile fields do not establish that the venue lacks those details.
+UI-capable clients display photos in the server's gallery. Written replies briefly
+mention the photos and link to the venue listing without duplicating the images.
+Clients without a gallery use the same listing link to view photos.
 
 ## Install and review
 
-Version **1.0.1**, release candidate. Requires the public server contract implemented
-in **0.4.0** or a compatible later version at
+Version **1.0.2**, release candidate, with all three skills at **0.2.1**.
+Use MCP server **0.5.1** or a compatible later version at
 `https://mcp.covercount.io/explore/mcp`. Client installation, skill activation and
 hosted acceptance are recorded separately; local package validation does not prove them.
 

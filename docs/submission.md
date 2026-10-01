@@ -1,7 +1,13 @@
 # Release and submission materials
 
-Release candidate: **covercount-explore 1.0.1**. Server contract: **0.4.0** or
+Release candidate: **covercount-explore 1.0.2**. Server baseline: **0.5.1** or
 compatible later. This document prepares submission; it does not record publication.
+
+This release updates all three skills to **0.2.1** with gallery-first photo
+presentation: brief written context and a venue link, without duplicate Markdown
+or HTML images. The MCP host serves the gallery and its CSP; the package supplies
+matching workflow instructions. Verify the deployed server and installed package
+together before claiming that duplicate-image behavior is resolved.
 
 ## Listing copy
 
@@ -55,7 +61,7 @@ external geocoding. Public cache/budget housekeeping creates no guest bookings.
 
 ## OpenAI release procedure
 
-Upload **`covercount-explore-openai-1.0.1.zip`** as the complete plugin in the OpenAI
+Upload **`covercount-explore-openai-1.0.2.zip`** as the complete plugin in the OpenAI
 plugin portal. The initial upload includes all three skills and the production MCP
 connection. Choose the verified developer identity, review Metadata & Skills,
 then connect the anonymous server under MCPs, complete domain verification and
@@ -75,6 +81,8 @@ Before authorized submission:
 - Check policy/support URLs, listing copy and generated inventory hashes.
 - Run [acceptance cases](evaluations.md) in ChatGPT and Codex, recording actual surfaces.
 - Verify not-booked wording, card outcomes and working website links.
+- Verify gallery rendering with CSP enforced, no duplicate images in the written
+  reply, and venue-link fallback in clients without gallery UI.
 - Upload the complete OpenAI plugin ZIP and review the draft.
 - Track submission, approval and publication separately; a local build or tool scan
   is not a published combined plugin.

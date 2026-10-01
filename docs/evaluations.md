@@ -32,6 +32,8 @@ to test discovery.
 | membersOnly=true, soldOut=true, moreDates=2. | Disclose restrictions; additional dates are not tickets |
 | “Discover wineries near Sonoma, no reservation needed.” | Places skill; no date/party required or availability assertion |
 | “What is Kula Hawaiian Kitchen like?” Selected venue slug available. | One public venue-detail lookup; description attributed to venue, useful menu/website links; no availability search or ownership deflection |
+| “Show me this venue's photos.” Run from Places and as a venue follow-up from Events and Reservations, with gallery UI and CSP enforcement enabled. | One `get_public_venue` lookup; gallery images load; brief text and the returned venue link; no duplicate Markdown/HTML images or raw photo URL list; respect `hasMorePhotos` |
+| Photo data is supplied, but the client has no gallery UI or gallery rendering fails. | Mention available photos and provide the returned venue listing link; no Markdown/HTML image fallback and no claim that the venue supplied no photos |
 | Profile has null description/menu and no photos; user asks what is available. | Say those details were not supplied; do not claim the venue has no description/menu/photos or invent reviews |
 | Profile has split hours, an overnight period and a dated closure; photo/exception lists are truncated. | Venue-local interpretation, exception precedence and honest list limits; opening hours do not prove inventory |
 | Profile returns NotFound or a lookup error. | Distinguish no accessible public profile from failed retrieval; do not use staff tools to fill gaps |

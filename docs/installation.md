@@ -7,7 +7,7 @@ client can still require its own account or administrator access.
 
 ## OpenAI: ChatGPT and Codex
 
-Use `covercount-explore-openai-1.0.1.zip`. It contains one `covercount-explore/`
+Use `covercount-explore-openai-1.0.2.zip`. It contains one `covercount-explore/`
 plugin directory with portable root `plugin.json`, `mcp.json`, all three skills
 and assets. A `.codex-plugin/plugin.json` / `.mcp.json` compatibility pair is also
 included. All formats refer to the same anonymous endpoint.
@@ -17,7 +17,7 @@ local plugin/marketplace installation flow. Enable it in a fresh conversation an
 run the [acceptance cases](evaluations.md). Bare MCP connection testing does not
 establish installation or activation of the bundled skills.
 
-For submission, upload the complete `covercount-explore-openai-1.0.1.zip` through
+For submission, upload the complete `covercount-explore-openai-1.0.2.zip` through
 OpenAI's plugin portal. It includes both the MCP connection and skills in the initial
 upload. See [submission](submission.md). Do not use the skills-only archive for this
 MCP-backed plugin. No registered app ID is needed in the package.
@@ -28,7 +28,7 @@ Current documentation: [OpenAI packaging](https://developers.openai.com/plugins/
 
 ## Claude Code
 
-Use `covercount-explore-claude-1.0.1.zip` or this checkout. Extract the archive and
+Use `covercount-explore-claude-1.0.2.zip` or this checkout. Extract the archive and
 point Claude Code at its `covercount-explore` directory:
 
 ```powershell
@@ -66,3 +66,14 @@ tool-only acceptance.
 When sources change, update all three manifest versions and affected skill versions,
 rebuild, reinstall/refresh through the target client and start a fresh conversation.
 Server deployment and client-package refresh are separate actions.
+
+For the **1.0.2** photo-presentation update, deploy MCP **0.5.1** and refresh its
+tool metadata, then install/update the complete plugin package to load skills
+**0.2.1**. Refreshing tools alone does not replace packaged skills. A direct MCP
+connection uses the server's guidance without installing these skills.
+
+In ChatGPT developer mode, use **CoverCount Explore > More actions > Manage >
+Refresh tools** for the server connection. Enable **Settings > Security and login >
+Enforce CSP for custom apps** and start a new conversation with the updated plugin.
+Check that photos load in the gallery, the written reply does not duplicate them
+as Markdown/HTML images, and the venue link works as the fallback without gallery UI.
