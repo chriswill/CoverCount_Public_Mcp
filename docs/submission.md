@@ -7,7 +7,7 @@ compatible later. This document prepares submission; it does not record publicat
 
 **Name:** CoverCount Explore
 
-**Short description:** Find places, events and reservation openings.
+**Short description:** Find places, events & tables
 
 **Description:** Discover public places, events and reservation openings by location
 and visit details. Check a selected opening's card requirement, then finish booking
@@ -50,13 +50,18 @@ external geocoding. Public cache/budget housekeeping creates no guest bookings.
 
 ## OpenAI release procedure
 
-Use **packaged skill upload**, not MCP skill import. Submit the remote endpoint
-through the MCP submission flow and attach the packaged skills to the same plugin
-draft. The OpenAI archive provides the local combined plugin;
-`covercount-explore-skills-1.0.0.zip` provides the three skill folders when skill
-upload is requested. Bind only a real registered connection identity assigned by
-the portal; no placeholder `.app.json` is supplied. See
-[OpenAI skill delivery](https://developers.openai.com/plugins/build/skills).
+Upload **`covercount-explore-openai-1.0.0.zip`** as the complete plugin in the OpenAI
+plugin portal. The initial upload includes all three skills and the production MCP
+connection. Choose the verified developer identity, review Metadata & Skills,
+then connect the anonymous server under MCPs, complete domain verification and
+review the tool scan. Do not use the skills-only archive for this submission.
+See [OpenAI's ZIP submission guide](https://developers.openai.com/plugins/deploy/submission).
+
+The package supplies a square emblem, a subtitle within the 30-character limit,
+and all four listing URLs. Before final review, complete five positive and three
+negative test cases, an accessible video walkthrough and release notes in the
+portal or supported package review metadata. No reviewer login is required for
+this anonymous connector. This package does not claim those review steps are done.
 
 Before authorized submission:
 
@@ -65,7 +70,7 @@ Before authorized submission:
 - Check policy/support URLs, listing copy and generated inventory hashes.
 - Run [acceptance cases](evaluations.md) in ChatGPT and Codex, recording actual surfaces.
 - Verify not-booked wording, card outcomes and working website links.
-- Upload current skills with the MCP entry and review the draft.
+- Upload the complete OpenAI plugin ZIP and review the draft.
 - Track submission, approval and publication separately; a local build or tool scan
   is not a published combined plugin.
 

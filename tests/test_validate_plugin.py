@@ -57,15 +57,21 @@ class ValidationTests(unittest.TestCase):
         for fragment in cases:
             with self.subTest(fragment=fragment):
                 (self.root / 'assets/icon.svg').write_text(
-                    '<svg xmlns="http://www.w3.org/2000/svg">' + fragment + '</svg>', encoding='utf-8')
+                    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">' + fragment + '</svg>', encoding='utf-8')
                 with self.assertRaisesRegex(ValueError, "SVG"):
                     validator.validate(self.root)
 
     def test_fragment_svg_reference_is_allowed(self):
         (self.root / 'assets/icon.svg').write_text(
-            '<svg xmlns="http://www.w3.org/2000/svg"><defs><path id="mark" d="M0 0"/></defs>'
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><defs><path id="mark" d="M0 0"/></defs>'
             '<use href="#mark"/></svg>', encoding='utf-8')
         validator.validate(self.root)
+
+    def test_nonsquare_submission_icon_is_rejected(self):
+        (self.root / 'assets/icon.svg').write_text(
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"/>', encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'square'):
+            validator.validate(self.root)
 
     def test_wrong_claude_privacy_policy_is_rejected(self):
         self.change_json('.claude-plugin/plugin.json', lambda value: value.update(privacyPolicyUrl='https://example.com'))

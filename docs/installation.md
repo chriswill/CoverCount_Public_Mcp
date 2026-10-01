@@ -17,9 +17,10 @@ local plugin/marketplace installation flow. Enable it in a fresh conversation an
 run the [acceptance cases](evaluations.md). Bare MCP connection testing does not
 establish installation or activation of the bundled skills.
 
-For submission, use packaged-skill upload alongside the remote MCP connection;
-see [submission](submission.md). This release does not expose an MCP skill-resource
-import extension or include a fabricated registered app ID.
+For submission, upload the complete `covercount-explore-openai-1.0.0.zip` through
+OpenAI's plugin portal. It includes both the MCP connection and skills in the initial
+upload. See [submission](submission.md). Do not use the skills-only archive for this
+MCP-backed plugin. No registered app ID is needed in the package.
 
 Current documentation: [OpenAI packaging](https://developers.openai.com/plugins/build/plugins),
 [skill delivery](https://developers.openai.com/plugins/build/skills), and

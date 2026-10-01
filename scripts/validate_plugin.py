@@ -76,11 +76,17 @@ def validate(root, server_source=None):
     interface = portable["extensions"]["com.openai"]["interface"]
     require(interface == codex["interface"], "OpenAI presentation differs between layouts")
     require(interface["displayName"] == "CoverCount Explore", "Wrong display identity")
+    require(1 <= len(interface["shortDescription"]) <= 30, "OpenAI subtitle exceeds submission limit")
+    require(interface.get("supportURL") == "https://support.cloudscope.io/", "Missing/wrong OpenAI support URL")
     require(interface["capabilities"] == ["Interactive"], "Unexpected capability claim")
-    for key, path in {"composerIcon": "./assets/icon.svg", "logo": "./assets/logo.svg", "logoDark": "./assets/logo-dark.svg"}.items():
+    for key, path in {"composerIcon": "./assets/icon.svg", "logo": "./assets/icon.svg", "logoDark": "./assets/icon.svg"}.items():
         require(interface.get(key) == path, f"Wrong asset path: {key}")
+    for path in ("./assets/icon.svg", "./assets/logo.svg", "./assets/logo-dark.svg"):
         svg = ET.fromstring(read_file(root, path[2:]))
         require(svg.tag == "{http://www.w3.org/2000/svg}svg", f"Not SVG: {path}")
+        if path == "./assets/icon.svg":
+            dimensions = [float(value) for value in svg.get("viewBox", "").split()]
+            require(len(dimensions) == 4 and 48 <= dimensions[2] == dimensions[3] < float("inf"), "Submission SVG must be square and at least 48 pixels")
         require(not any(node.tag.rsplit("}", 1)[-1].lower() in
                         {"script", "foreignobject", "style", "animate", "animatemotion", "animatetransform", "set", "discard"}
                         for node in svg.iter()), f"Active/styled SVG: {path}")
