@@ -1,7 +1,7 @@
 {
   "name": "covercount-explore",
   "displayName": "CoverCount Explore",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Find public reservation openings, events and places. Finish booking on CoverCount.",
   "author": {
     "name": "CoverCount",

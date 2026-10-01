@@ -17,7 +17,7 @@ SKILLS = {
     "covercount-find-events": {"search_public_events", "get_public_venue"},
     "covercount-find-places": {"search_places", "search_available_reservations", "get_public_venue"},
 }
-COMMON_FILES = {"README.md", "LICENSE.txt", "assets/icon.svg", "assets/logo.svg", "assets/logo-dark.svg",
+COMMON_FILES = {"README.md", "LICENSE.txt", "assets/icon.png", "assets/logo.svg", "assets/logo-dark.svg",
                 "docs/installation.md", "docs/submission.md", "docs/evaluations.md"}
 OPENAI_FILES = {"plugin.json", "mcp.json", ".codex-plugin/plugin.json", ".mcp.json"}
 CLAUDE_FILES = {".claude-plugin/plugin.json", ".mcp.json"}
@@ -79,14 +79,17 @@ def validate(root, server_source=None):
     require(1 <= len(interface["shortDescription"]) <= 30, "OpenAI subtitle exceeds submission limit")
     require(interface.get("supportURL") == "https://support.cloudscope.io/", "Missing/wrong OpenAI support URL")
     require(interface["capabilities"] == ["Interactive"], "Unexpected capability claim")
-    for key, path in {"composerIcon": "./assets/icon.svg", "logo": "./assets/icon.svg", "logoDark": "./assets/icon.svg"}.items():
+    for key, path in {"composerIcon": "./assets/icon.png", "logo": "./assets/icon.png", "logoDark": "./assets/icon.png"}.items():
         require(interface.get(key) == path, f"Wrong asset path: {key}")
-    for path in ("./assets/icon.svg", "./assets/logo.svg", "./assets/logo-dark.svg"):
+    icon = read_file(root, "assets/icon.png")
+    require(len(icon) >= 33 and icon[:16] == b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR", "Submission icon must be PNG")
+    width = int.from_bytes(icon[16:20], "big")
+    height = int.from_bytes(icon[20:24], "big")
+    require(48 <= width == height <= 4096, "Submission PNG must be square and between 48 and 4096 pixels")
+    require(len(icon) <= 5 * 1024 * 1024, "Submission PNG exceeds 5 MiB")
+    for path in ("./assets/logo.svg", "./assets/logo-dark.svg"):
         svg = ET.fromstring(read_file(root, path[2:]))
         require(svg.tag == "{http://www.w3.org/2000/svg}svg", f"Not SVG: {path}")
-        if path == "./assets/icon.svg":
-            dimensions = [float(value) for value in svg.get("viewBox", "").split()]
-            require(len(dimensions) == 4 and 48 <= dimensions[2] == dimensions[3] < float("inf"), "Submission SVG must be square and at least 48 pixels")
         require(not any(node.tag.rsplit("}", 1)[-1].lower() in
                         {"script", "foreignobject", "style", "animate", "animatemotion", "animatetransform", "set", "discard"}
                         for node in svg.iter()), f"Active/styled SVG: {path}")

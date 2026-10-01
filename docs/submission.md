@@ -1,11 +1,13 @@
 # Release and submission materials
 
-Release candidate: **covercount-explore 1.0.0**. Server contract: **0.4.0** or
+Release candidate: **covercount-explore 1.0.1**. Server contract: **0.4.0** or
 compatible later. This document prepares submission; it does not record publication.
 
 ## Listing copy
 
 **Name:** CoverCount Explore
+
+**Category:** Entertainment
 
 **Short description:** Find places, events & tables
 
@@ -26,8 +28,11 @@ for discovery. Availability and payment requirements are rechecked on the websit
 
 **Terms:** https://www.covercount.io/terms-of-service
 
-Starter prompts are in the README and OpenAI metadata. Existing CoverCount icons
-and logos are included in `assets/`; they are brand assets, not a trademark grant.
+Starter prompts are in the README and OpenAI metadata. The default listing icon is
+`assets/icon.png`, the supplied 1024 x 1024 CoverCount emblem.
+Use this PNG when a directory submission asks for an icon upload. Both OpenAI and
+Claude packages include it; OpenAI presentation metadata references it in both themes.
+The included icons and logos are brand assets, not a trademark grant.
 No screenshots or invented review credentials are supplied.
 
 ## Connection and tool review
@@ -50,7 +55,7 @@ external geocoding. Public cache/budget housekeeping creates no guest bookings.
 
 ## OpenAI release procedure
 
-Upload **`covercount-explore-openai-1.0.0.zip`** as the complete plugin in the OpenAI
+Upload **`covercount-explore-openai-1.0.1.zip`** as the complete plugin in the OpenAI
 plugin portal. The initial upload includes all three skills and the production MCP
 connection. Choose the verified developer identity, review Metadata & Skills,
 then connect the anonymous server under MCPs, complete domain verification and

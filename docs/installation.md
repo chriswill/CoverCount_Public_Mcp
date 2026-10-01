@@ -7,7 +7,7 @@ client can still require its own account or administrator access.
 
 ## OpenAI: ChatGPT and Codex
 
-Use `covercount-explore-openai-1.0.0.zip`. It contains one `covercount-explore/`
+Use `covercount-explore-openai-1.0.1.zip`. It contains one `covercount-explore/`
 plugin directory with portable root `plugin.json`, `mcp.json`, all three skills
 and assets. A `.codex-plugin/plugin.json` / `.mcp.json` compatibility pair is also
 included. All formats refer to the same anonymous endpoint.
@@ -17,7 +17,7 @@ local plugin/marketplace installation flow. Enable it in a fresh conversation an
 run the [acceptance cases](evaluations.md). Bare MCP connection testing does not
 establish installation or activation of the bundled skills.
 
-For submission, upload the complete `covercount-explore-openai-1.0.0.zip` through
+For submission, upload the complete `covercount-explore-openai-1.0.1.zip` through
 OpenAI's plugin portal. It includes both the MCP connection and skills in the initial
 upload. See [submission](submission.md). Do not use the skills-only archive for this
 MCP-backed plugin. No registered app ID is needed in the package.
@@ -28,7 +28,7 @@ Current documentation: [OpenAI packaging](https://developers.openai.com/plugins/
 
 ## Claude Code
 
-Use `covercount-explore-claude-1.0.0.zip` or this checkout. Extract the archive and
+Use `covercount-explore-claude-1.0.1.zip` or this checkout. Extract the archive and
 point Claude Code at its `covercount-explore` directory:
 
 ```powershell

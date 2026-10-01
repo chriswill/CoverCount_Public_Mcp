@@ -1,6 +1,6 @@
 {
   "name": "covercount-explore",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Find public reservation openings, events and places. Finish booking on CoverCount.",
   "author": {
     "name": "CoverCount",
@@ -21,7 +21,7 @@
     "shortDescription": "Find places, events & tables",
     "longDescription": "Discover public places, events and reservation openings by location and visit details. Check a selected opening's card requirement, then finish booking on CoverCount. Search does not book or hold anything. No CoverCount account is needed for discovery.",
     "developerName": "CoverCount",
-    "category": "Lifestyle",
+    "category": "Entertainment",
     "capabilities": [
       "Interactive"
     ],
@@ -33,9 +33,9 @@
       "What public events are in Paso Robles this weekend?",
       "Help me discover wineries near Sonoma."
     ],
-    "composerIcon": "./assets/icon.svg",
-    "logo": "./assets/icon.svg",
-    "logoDark": "./assets/icon.svg",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/icon.png",
+    "logoDark": "./assets/icon.png",
     "supportURL": "https://support.cloudscope.io/"
   },
   "repository": "https://github.com/chriswill/CoverCount_Public_Mcp"
