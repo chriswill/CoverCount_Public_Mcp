@@ -1,10 +1,11 @@
 {
   "name": "covercount-explore",
   "displayName": "CoverCount Explore",
+  "icon": "./assets/icon.png",
   "version": "1.0.2",
   "description": "Find public reservation openings, events and places. Finish booking on CoverCount.",
   "author": {
-    "name": "CoverCount",
+    "name": "CloudScope",
     "url": "https://www.covercount.io/"
   },
   "homepage": "https://explore.covercount.io/",

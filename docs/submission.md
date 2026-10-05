@@ -38,6 +38,9 @@ Starter prompts are in the README and OpenAI metadata. The default listing icon 
 `assets/icon.png`, the supplied 1024 x 1024 CoverCount emblem.
 Use this PNG when a directory submission asks for an icon upload. Both OpenAI and
 Claude packages include it; OpenAI presentation metadata references it in both themes.
+The Claude manifest also declares `"icon": "./assets/icon.png"` for Anthropic's
+directory. This packaged asset does not establish that the submission portal will
+preview the relative path or bypass its separate uploaded-image review/expiration.
 The included icons and logos are brand assets, not a trademark grant.
 No screenshots or invented review credentials are supplied.
 
