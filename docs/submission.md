@@ -1,9 +1,20 @@
 # Release and submission materials
 
-Release candidate: **covercount-explore 1.0.3**. Server baseline: **0.5.1** or
+Release candidate: **covercount-explore 1.0.4**. Server baseline: **0.5.1** or
 compatible later. This document prepares submission; it does not record publication.
 
-Version **1.0.3** changes no skills, tools or server behavior. It republishes the
+Version **1.0.4** declares `extensions["com.openai"].auth.type = "none"` on the
+portable `mcp.json` server. The OpenAI portal reads authentication only from that
+declaration; without it the MCPs tab showed "Endpoint unavailable" and MCP setup
+could not complete. It also moves the review materials into root `plugin.json`
+under `extensions.com.openai.review` and `publication`: five positive and three
+negative cases, the demo recording, the no-commerce declaration, United States
+availability and release notes. These were previously entered by hand in the
+portal. Starter prompts now use Paso Robles and Atascadero, which return live public
+results; "Napa" did not resolve and Sonoma returned no places. No skills, tools or
+server behavior change.
+
+Version 1.0.3 changes no skills, tools or server behavior. It republishes the
 `"icon": "./assets/icon.png"` Claude manifest declaration, added after the live
 1.0.2 directory scan, so the Anthropic listing can pick up the emblem.
 
@@ -51,7 +62,8 @@ No screenshots or invented review credentials are supplied.
 ## Connection and tool review
 
 Remote HTTPS endpoint: `https://mcp.covercount.io/explore/mcp`.
-Authentication: anonymous. No CoverCount account, OAuth scopes or reviewer login.
+Authentication: anonymous, declared as `auth.type: "none"` in `mcp.json`. No CoverCount
+account, OAuth scopes or reviewer login.
 
 | Tool | User purpose | Hint rationale |
 | --- | --- | --- |
@@ -68,7 +80,7 @@ external geocoding. Public cache/budget housekeeping creates no guest bookings.
 
 ## OpenAI release procedure
 
-Upload **`covercount-explore-openai-1.0.3.zip`** as the complete plugin in the OpenAI
+Upload **`covercount-explore-openai-1.0.4.zip`** as the complete plugin in the OpenAI
 plugin portal. The initial upload includes all three skills and the production MCP
 connection. Choose the verified developer identity, review Metadata & Skills,
 then connect the anonymous server under MCPs, complete domain verification and
@@ -76,10 +88,13 @@ review the tool scan. Do not use the skills-only archive for this submission.
 See [OpenAI's ZIP submission guide](https://developers.openai.com/plugins/deploy/submission).
 
 The package supplies a square emblem, a subtitle within the 30-character limit,
-and all four listing URLs. Before final review, complete five positive and three
-negative test cases, an accessible video walkthrough and release notes in the
-portal or supported package review metadata. No reviewer login is required for
-this anonymous connector. This package does not claim those review steps are done.
+and all four listing URLs. Review cases, the video walkthrough
+(`https://covercount.blob.core.windows.net/public/CoverCount_Explore.mp4`), commerce
+declaration, countries and release notes are imported from root `plugin.json`; check
+them under **Review information → Review details** after upload. The positive cases
+use live public data for Kula Hawaiian Kitchen & Winery; keep that venue's public
+openings and profile available while review is in progress. No reviewer login is
+required for this anonymous connector. The cases are drafted, not yet run in ChatGPT.
 
 Before authorized submission:
 

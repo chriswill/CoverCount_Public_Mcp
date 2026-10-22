@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "covercount-explore",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Find public reservation openings, events and places. Finish booking on CoverCount.",
   "author": {
     "name": "CloudScope",
@@ -30,14 +30,73 @@
         "privacyPolicyURL": "https://www.covercount.io/privacy",
         "termsOfServiceURL": "https://www.covercount.io/terms-of-service",
         "defaultPrompt": [
-          "Find a tasting reservation for four in Napa tomorrow afternoon.",
-          "What public events are in Paso Robles this weekend?",
-          "Help me discover wineries near Sonoma."
+          "Find dinner for four near Paso Robles this Saturday evening.",
+          "What wineries and restaurants can I visit near Atascadero?",
+          "Are there public events near Paso Robles in the next 30 days?"
         ],
         "composerIcon": "./assets/icon.png",
         "logo": "./assets/icon.png",
         "logoDark": "./assets/icon.png",
         "supportURL": "https://support.cloudscope.io/"
+      },
+      "review": {
+        "demo_recording_url": "https://covercount.blob.core.windows.net/public/CoverCount_Explore.mp4",
+        "commerce": false,
+        "commerce_description": "CoverCount Explore does not sell products or tickets, collect card or contact details, or create, hold or pay for bookings. It searches public openings, events and places and links to the CoverCount website, which rechecks availability and handles any card requirement.",
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Live public data, anonymous connection, no reviewer login. Kula Hawaiian Kitchen & Winery (Atascadero, CA, venue-local America/Los_Angeles) publishes dinner openings Tuesday through Sunday evenings. Reservation discovery with a relative date, party size and preferred time.",
+              "prompt": "Find dinner for two near Paso Robles next Friday around 6 pm.",
+              "tools_triggered": "search_available_reservations",
+              "expected_behavior": "Resolve next Friday to a venue-local date and search with partySize=2 and reservationTime 18:00 near Paso Robles. List Kula Hawaiian Kitchen & Winery in Atascadero with its returned local times, labelling nearby times as alternatives. Search results report the card requirement as Unknown, so do not claim no card is needed. State that nothing is booked or held and give the returned Finish booking on CoverCount link. Do not ask for name, phone or email."
+            },
+            {
+              "description": "Live public data, anonymous connection, no reviewer login. Kula Hawaiian Kitchen & Winery (Atascadero, CA, venue-local America/Los_Angeles) publishes dinner openings Tuesday through Sunday evenings. Follow-up on one selected opening: availability recheck and card requirement.",
+              "prompt": "Does the 6 pm opening at Kula need a card? If not, how do I book it?",
+              "tools_triggered": "search_available_reservations, get_reservation_opening",
+              "expected_behavior": "Make one get_reservation_opening call for that exact venue, experience, date, 18:00 and party of two, not a call per slot. Report the returned availability and card requirement as returned (for example NotRequired or Required); if the opening is no longer Available, say so and do not repeat the earlier availability claim. Explain that the reservation is not booked or held and that the website rechecks availability and payment. Give the returned handoff link; never claim a booking was made."
+            },
+            {
+              "description": "Live public data, anonymous connection, no reviewer login. Kula Hawaiian Kitchen & Winery (Atascadero, CA, venue-local America/Los_Angeles) publishes dinner openings Tuesday through Sunday evenings. Place discovery without visit details; Places does not establish availability.",
+              "prompt": "What restaurants and wineries can I discover near Paso Robles?",
+              "tools_triggered": "search_places",
+              "expected_behavior": "Call search_places near Paso Robles without asking for a date or party size. List the returned places, including Kula Hawaiian Kitchen & Winery in Atascadero with its distance and venue link. Do not claim open tables or availability from a place listing, and do not invent ratings, reviews or venues that were not returned."
+            },
+            {
+              "description": "Live public data, anonymous connection, no reviewer login. Kula Hawaiian Kitchen & Winery (Atascadero, CA, venue-local America/Los_Angeles) publishes dinner openings Tuesday through Sunday evenings. Selected venue details and photos. Kula's profile has split Sunday hours, Monday closed, menu and website links, contact details and more photos than one page returns.",
+              "prompt": "Tell me about Kula Hawaiian Kitchen & Winery in Atascadero: its hours, menu, contact details and photos.",
+              "tools_triggered": "search_places, get_public_venue",
+              "expected_behavior": "Resolve the venue slug if needed, then make one get_public_venue call. Attribute the description to the venue. Give the address, website and menu links, phone and email, and venue-local hours, preserving Sunday's split hours and Monday as closed. In UI-capable clients, photos appear in the gallery; the written reply mentions them briefly and links to the venue listing without repeating Markdown or HTML images, and notes that more photos are on the listing. Hours do not establish reservation availability. Do not invent reviews or amenities."
+            },
+            {
+              "description": "Live public data, anonymous connection. Event discovery in a supported date window. Results depend on events published at review time; an empty result is a valid outcome.",
+              "prompt": "What public events are near Paso Robles in the next 30 days?",
+              "tools_triggered": "search_public_events",
+              "expected_behavior": "Call search_public_events near Paso Robles with dateWindow=Next30Days. For returned events, give the name, venue-local dates and times, the listed starting price with currency, and any members-only, sold-out or additional-date details, with the event link; do not call additional dates tickets or invent prices. If none are returned, say no public events were found in that window, not that the area has no events at all. Do not register for or purchase anything."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Booking on the user's behalf and contact collection are unsupported. Do not collect, store or pass the name or phone number to any tool and do not claim a reservation was made or held. Explain that booking is finished on the CoverCount website and offer the returned handoff link for the chosen opening.",
+              "prompt": "Book the 6 pm table at Kula for me. My name is Alex Rivera and my phone number is 805-555-0100."
+            },
+            {
+              "description": "Existing bookings and staff operations are outside Explore. It cannot look up, change or cancel a reservation or message a venue. Do not search for the booking, do not claim it was cancelled or that a message was sent, and direct the guest to their confirmation or the venue's contact details.",
+              "prompt": "Cancel my reservation at Kula tomorrow night and text the host that I'm running late."
+            },
+            {
+              "description": "Polling and scheduled monitoring are unsupported. Do not repeat searches on a timer or promise notifications. Offer one search now and explain the guest can check again later or finish on the CoverCount website.",
+              "prompt": "Keep checking every minute and tell me as soon as a 7 pm table for six opens up at Kula this Saturday."
+            }
+          ]
+        }
+      },
+      "publication": {
+        "countries": [
+          "US"
+        ],
+        "release_notes": "Declares anonymous MCP authentication (auth.type none) in mcp.json so the portal can complete MCP setup, and adds five positive and three negative review cases, the commerce declaration and United States availability to the package. Replaces the starter prompts with Paso Robles and Atascadero requests that return live public results. No skill or tool changes."
       }
     }
   },

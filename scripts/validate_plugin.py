@@ -50,6 +50,35 @@ def json_file(root, name):
     return json.loads(read_file(root, name), object_pairs_hook=unique)
 
 
+def validate_review(openai):
+    """OpenAI imports these review fields from the ZIP; reviewer credentials never belong here."""
+    review = openai["review"]
+    require(isinstance(review, dict) and set(review) == {"demo_recording_url", "commerce", "commerce_description", "test_cases"},
+            "Unexpected review fields; keep reviewer credentials/instructions out of the ZIP")
+    require(isinstance(review["demo_recording_url"], str) and review["demo_recording_url"].startswith("https://"),
+            "Review demo recording must be an HTTPS URL")
+    require(review["commerce"] is False and isinstance(review["commerce_description"], str)
+            and bool(review["commerce_description"].strip()), "Explore must declare no commerce with an explanation")
+    cases = review["test_cases"]
+    require(isinstance(cases, dict) and set(cases) == {"positive", "negative"}, "Review cases must have positive and negative lists")
+    for kind, count in (("positive", 5), ("negative", 3)):
+        require(isinstance(cases[kind], list) and len(cases[kind]) == count, f"Initial MCP review requires exactly {count} {kind} cases")
+        fields = {"description", "prompt"} | ({"tools_triggered", "expected_behavior"} if kind == "positive" else set())
+        for case in cases[kind]:
+            require(isinstance(case, dict) and set(case) == fields
+                    and all(isinstance(value, str) and value.strip() for value in case.values()),
+                    f"Incomplete or unsupported {kind} review case fields")
+            require(len(case["description"]) <= 4000, "Review scenario exceeds 4000 characters")
+            if kind == "positive":
+                names = {name.strip() for name in case["tools_triggered"].split(",")}
+                require(names <= TOOLS, f"Unknown review tools: {sorted(names - TOOLS)}")
+    require(len({case["prompt"] for group in cases.values() for case in group}) == 8, "Review prompts must be distinct")
+    publication = openai["publication"]
+    require(isinstance(publication, dict) and set(publication) == {"countries", "release_notes"}
+            and publication["countries"] == ["US"] and isinstance(publication["release_notes"], str)
+            and bool(publication["release_notes"].strip()), "Missing/unexpected publication metadata")
+
+
 def validate(root, server_source=None):
     root = Path(root).absolute()
     portable = json_file(root, "plugin.json")
@@ -64,7 +93,8 @@ def validate(root, server_source=None):
     require(portable["homepage"] == "https://explore.covercount.io/", "Wrong Explore homepage")
     require(portable["repository"] == "https://github.com/chriswill/CoverCount_Public_Mcp", "Wrong Explore repository")
     require(set(portable["extensions"]) == {"com.openai"}, "Unexpected extension")
-    require(set(portable["extensions"]["com.openai"]) == {"interface"}, "Unexpected OpenAI extension fields")
+    require(set(portable["extensions"]["com.openai"]) == {"interface", "review", "publication"}, "Unexpected OpenAI extension fields")
+    validate_review(portable["extensions"]["com.openai"])
     require(set(codex) == shared | {"skills", "mcpServers", "interface"}, "Unexpected Codex fields")
     require(set(claude) == shared | {"skills", "mcpServers", "privacyPolicyUrl", "documentationUrl", "displayName", "icon"}, "Unexpected Claude fields")
     require(claude["icon"] == "./assets/icon.png", "Wrong Claude listing icon")
@@ -106,7 +136,9 @@ def validate(root, server_source=None):
     require(json_file(root, ".mcp.json") == expected_mcp, "Wrong anonymous connection or unexpected credentials/settings")
     require(json_file(root, "mcp.json") == {
         "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
-        "mcpServers": {NAME: {"type": "streamable-http", "url": ENDPOINT}}}, "Wrong portable connection")
+        "mcpServers": {NAME: {"type": "streamable-http", "url": ENDPOINT,
+                              "extensions": {"com.openai": {"auth": {"type": "none"}}}}}},
+        "Wrong portable connection")
 
     skill_files = set()
     versions = {}

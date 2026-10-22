@@ -9,9 +9,9 @@ guest details and consent and rechecks availability and card requirements.
 
 Try:
 
-- “Find a tasting reservation for four in Napa tomorrow afternoon.”
-- “What public events are in Paso Robles this weekend?”
-- “Help me discover wineries near Sonoma.”
+- “Find dinner for four near Paso Robles this Saturday evening.”
+- “What wineries and restaurants can I visit near Atascadero?”
+- “Are there public events near Paso Robles in the next 30 days?”
 - “What is this venue like? Can I see its menu and hours?”
 
 The three skills distinguish a new reservation search, event discovery, and places
@@ -29,7 +29,7 @@ Clients without a gallery use the same listing link to view photos.
 
 ## Install and review
 
-Version **1.0.3**, release candidate, with all three skills at **0.2.1**.
+Version **1.0.4**, release candidate, with all three skills at **0.2.1**.
 Use MCP server **0.5.1** or a compatible later version at
 `https://mcp.covercount.io/explore/mcp`. Client installation, skill activation and
 hosted acceptance are recorded separately; local package validation does not prove them.

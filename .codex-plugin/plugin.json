@@ -1,6 +1,6 @@
 {
   "name": "covercount-explore",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Find public reservation openings, events and places. Finish booking on CoverCount.",
   "author": {
     "name": "CloudScope",
@@ -29,9 +29,9 @@
     "privacyPolicyURL": "https://www.covercount.io/privacy",
     "termsOfServiceURL": "https://www.covercount.io/terms-of-service",
     "defaultPrompt": [
-      "Find a tasting reservation for four in Napa tomorrow afternoon.",
-      "What public events are in Paso Robles this weekend?",
-      "Help me discover wineries near Sonoma."
+      "Find dinner for four near Paso Robles this Saturday evening.",
+      "What wineries and restaurants can I visit near Atascadero?",
+      "Are there public events near Paso Robles in the next 30 days?"
     ],
     "composerIcon": "./assets/icon.png",
     "logo": "./assets/icon.png",

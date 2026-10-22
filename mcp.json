@@ -3,7 +3,14 @@
   "mcpServers": {
     "covercount-explore": {
       "type": "streamable-http",
-      "url": "https://mcp.covercount.io/explore/mcp"
+      "url": "https://mcp.covercount.io/explore/mcp",
+      "extensions": {
+        "com.openai": {
+          "auth": {
+            "type": "none"
+          }
+        }
+      }
     }
   }
 }

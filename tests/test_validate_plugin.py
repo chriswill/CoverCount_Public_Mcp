@@ -85,6 +85,19 @@ class ValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "connection"):
             validator.validate(self.root)
 
+    def test_review_case_naming_an_unknown_tool_is_rejected(self):
+        # Reviewers run the cases literally; a staff or misspelled tool would fail review.
+        self.change_json("plugin.json", lambda value: value["extensions"]["com.openai"]["review"]["test_cases"]["positive"][0]
+                         .update(tools_triggered="search_available_reservations, create_reservation"))
+        with self.assertRaisesRegex(ValueError, "Unknown review tools"):
+            validator.validate(self.root)
+
+    def test_missing_openai_auth_declaration_is_rejected(self):
+        # The OpenAI portal reads auth from mcp.json; without it MCP setup cannot complete.
+        self.change_json("mcp.json", lambda value: value["mcpServers"][validator.NAME].pop("extensions"))
+        with self.assertRaisesRegex(ValueError, "connection"):
+            validator.validate(self.root)
+
     def test_mismatched_release_versions_are_rejected(self):
         self.change_json(".claude-plugin/plugin.json", lambda value: value.update(version="9.9.9"))
         with self.assertRaisesRegex(ValueError, "mismatch"):
