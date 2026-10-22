@@ -29,7 +29,7 @@ Clients without a gallery use the same listing link to view photos.
 
 ## Install and review
 
-Version **1.0.4**, release candidate, with all three skills at **0.2.1**.
+Version **1.0.5**, release candidate, with all three skills at **0.2.1**.
 Use MCP server **0.5.1** or a compatible later version at
 `https://mcp.covercount.io/explore/mcp`. Client installation, skill activation and
 hosted acceptance are recorded separately; local package validation does not prove them.

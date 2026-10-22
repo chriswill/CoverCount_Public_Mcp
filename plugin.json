@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "covercount-explore",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Find public reservation openings, events and places. Finish booking on CoverCount.",
   "author": {
     "name": "CloudScope",
@@ -46,31 +46,31 @@
         "test_cases": {
           "positive": [
             {
-              "description": "Live public data, anonymous connection, no reviewer login. Kula Hawaiian Kitchen & Winery (Atascadero, CA, venue-local America/Los_Angeles) publishes dinner openings Tuesday through Sunday evenings. Reservation discovery with a relative date, party size and preferred time.",
+              "description": "Reservation search with a relative date, party size and time. Live public data, no login: Kula Hawaiian Kitchen & Winery in Atascadero, CA has dinner openings Tuesday through Sunday evenings.",
               "prompt": "Find dinner for two near Paso Robles next Friday around 6 pm.",
               "tools_triggered": "search_available_reservations",
               "expected_behavior": "Resolve next Friday to a venue-local date and search with partySize=2 and reservationTime 18:00 near Paso Robles. List Kula Hawaiian Kitchen & Winery in Atascadero with its returned local times, labelling nearby times as alternatives. Search results report the card requirement as Unknown, so do not claim no card is needed. State that nothing is booked or held and give the returned Finish booking on CoverCount link. Do not ask for name, phone or email."
             },
             {
-              "description": "Live public data, anonymous connection, no reviewer login. Kula Hawaiian Kitchen & Winery (Atascadero, CA, venue-local America/Los_Angeles) publishes dinner openings Tuesday through Sunday evenings. Follow-up on one selected opening: availability recheck and card requirement.",
+              "description": "Follow-up on one selected opening: recheck its availability and card requirement. Live public data, no login; uses the 6 pm Kula Hawaiian Kitchen & Winery opening from test case 1.",
               "prompt": "Does the 6 pm opening at Kula need a card? If not, how do I book it?",
               "tools_triggered": "search_available_reservations, get_reservation_opening",
               "expected_behavior": "Make one get_reservation_opening call for that exact venue, experience, date, 18:00 and party of two, not a call per slot. Report the returned availability and card requirement as returned (for example NotRequired or Required); if the opening is no longer Available, say so and do not repeat the earlier availability claim. Explain that the reservation is not booked or held and that the website rechecks availability and payment. Give the returned handoff link; never claim a booking was made."
             },
             {
-              "description": "Live public data, anonymous connection, no reviewer login. Kula Hawaiian Kitchen & Winery (Atascadero, CA, venue-local America/Los_Angeles) publishes dinner openings Tuesday through Sunday evenings. Place discovery without visit details; Places does not establish availability.",
+              "description": "Place discovery with no date or party size; a place listing does not establish availability. Live public data, no login; Kula Hawaiian Kitchen & Winery is returned near Paso Robles.",
               "prompt": "What restaurants and wineries can I discover near Paso Robles?",
               "tools_triggered": "search_places",
               "expected_behavior": "Call search_places near Paso Robles without asking for a date or party size. List the returned places, including Kula Hawaiian Kitchen & Winery in Atascadero with its distance and venue link. Do not claim open tables or availability from a place listing, and do not invent ratings, reviews or venues that were not returned."
             },
             {
-              "description": "Live public data, anonymous connection, no reviewer login. Kula Hawaiian Kitchen & Winery (Atascadero, CA, venue-local America/Los_Angeles) publishes dinner openings Tuesday through Sunday evenings. Selected venue details and photos. Kula's profile has split Sunday hours, Monday closed, menu and website links, contact details and more photos than one page returns.",
+              "description": "Venue details and photos for Kula Hawaiian Kitchen & Winery: split Sunday hours, closed Monday, menu, website, contact details and more photos than one page. Live public data, no login.",
               "prompt": "Tell me about Kula Hawaiian Kitchen & Winery in Atascadero: its hours, menu, contact details and photos.",
               "tools_triggered": "search_places, get_public_venue",
               "expected_behavior": "Resolve the venue slug if needed, then make one get_public_venue call. Attribute the description to the venue. Give the address, website and menu links, phone and email, and venue-local hours, preserving Sunday's split hours and Monday as closed. In UI-capable clients, photos appear in the gallery; the written reply mentions them briefly and links to the venue listing without repeating Markdown or HTML images, and notes that more photos are on the listing. Hours do not establish reservation availability. Do not invent reviews or amenities."
             },
             {
-              "description": "Live public data, anonymous connection. Event discovery in a supported date window. Results depend on events published at review time; an empty result is a valid outcome.",
+              "description": "Event discovery in a supported date window. Live public data, no login. Results depend on events published at review time; an empty result is a valid outcome.",
               "prompt": "What public events are near Paso Robles in the next 30 days?",
               "tools_triggered": "search_public_events",
               "expected_behavior": "Call search_public_events near Paso Robles with dateWindow=Next30Days. For returned events, give the name, venue-local dates and times, the listed starting price with currency, and any members-only, sold-out or additional-date details, with the event link; do not call additional dates tickets or invent prices. If none are returned, say no public events were found in that window, not that the area has no events at all. Do not register for or purchase anything."
@@ -78,15 +78,15 @@
           ],
           "negative": [
             {
-              "description": "Booking on the user's behalf and contact collection are unsupported. Do not collect, store or pass the name or phone number to any tool and do not claim a reservation was made or held. Explain that booking is finished on the CoverCount website and offer the returned handoff link for the chosen opening.",
+              "description": "Booking for the user and collecting contact details are unsupported. Do not pass the name or phone to any tool or claim a booking; offer the CoverCount website handoff link instead.",
               "prompt": "Book the 6 pm table at Kula for me. My name is Alex Rivera and my phone number is 805-555-0100."
             },
             {
-              "description": "Existing bookings and staff operations are outside Explore. It cannot look up, change or cancel a reservation or message a venue. Do not search for the booking, do not claim it was cancelled or that a message was sent, and direct the guest to their confirmation or the venue's contact details.",
+              "description": "Existing bookings and staff actions are outside Explore. Do not look up, cancel or message, or claim it was done; point the guest to their confirmation or the venue's contact details.",
               "prompt": "Cancel my reservation at Kula tomorrow night and text the host that I'm running late."
             },
             {
-              "description": "Polling and scheduled monitoring are unsupported. Do not repeat searches on a timer or promise notifications. Offer one search now and explain the guest can check again later or finish on the CoverCount website.",
+              "description": "Polling and monitoring are unsupported. Do not search on a timer or promise alerts; offer one search now and suggest checking again later or finishing on the CoverCount website.",
               "prompt": "Keep checking every minute and tell me as soon as a 7 pm table for six opens up at Kula this Saturday."
             }
           ]
@@ -96,7 +96,7 @@
         "countries": [
           "US"
         ],
-        "release_notes": "Declares anonymous MCP authentication (auth.type none) in mcp.json so the portal can complete MCP setup, and adds five positive and three negative review cases, the commerce declaration and United States availability to the package. Replaces the starter prompts with Paso Robles and Atascadero requests that return live public results. No skill or tool changes."
+        "release_notes": "Shortens each review scenario to the portal's 200-character limit. Includes the 1.0.4 changes: anonymous MCP authentication (auth.type none) in mcp.json, five positive and three negative review cases, the demo recording, the commerce declaration, United States availability and starter prompts that return live public results. No skill or tool changes."
       }
     }
   },

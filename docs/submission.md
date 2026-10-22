@@ -1,9 +1,13 @@
 # Release and submission materials
 
-Release candidate: **covercount-explore 1.0.4**. Server baseline: **0.5.1** or
+Release candidate: **covercount-explore 1.0.5**. Server baseline: **0.5.1** or
 compatible later. This document prepares submission; it does not record publication.
 
-Version **1.0.4** declares `extensions["com.openai"].auth.type = "none"` on the
+Version **1.0.5** shortens every review scenario (`description`) to at most 200
+characters, the limit the portal's Scenario field enforces (OpenAI's reference lists
+4000). Nothing else changes.
+
+Version 1.0.4 declared `extensions["com.openai"].auth.type = "none"` on the
 portable `mcp.json` server. The OpenAI portal reads authentication only from that
 declaration; without it the MCPs tab showed "Endpoint unavailable" and MCP setup
 could not complete. It also moves the review materials into root `plugin.json`
@@ -80,7 +84,7 @@ external geocoding. Public cache/budget housekeeping creates no guest bookings.
 
 ## OpenAI release procedure
 
-Upload **`covercount-explore-openai-1.0.4.zip`** as the complete plugin in the OpenAI
+Upload **`covercount-explore-openai-1.0.5.zip`** as the complete plugin in the OpenAI
 plugin portal. The initial upload includes all three skills and the production MCP
 connection. Choose the verified developer identity, review Metadata & Skills,
 then connect the anonymous server under MCPs, complete domain verification and

@@ -68,7 +68,7 @@ def validate_review(openai):
             require(isinstance(case, dict) and set(case) == fields
                     and all(isinstance(value, str) and value.strip() for value in case.values()),
                     f"Incomplete or unsupported {kind} review case fields")
-            require(len(case["description"]) <= 4000, "Review scenario exceeds 4000 characters")
+            require(len(case["description"]) <= 200, "Review scenario exceeds the portal's 200-character limit")
             if kind == "positive":
                 names = {name.strip() for name in case["tools_triggered"].split(",")}
                 require(names <= TOOLS, f"Unknown review tools: {sorted(names - TOOLS)}")
