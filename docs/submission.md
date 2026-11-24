@@ -1,6 +1,6 @@
 # Release and submission materials
 
-Release candidate: **covercount-explore 1.0.5**. Server baseline: **0.5.1** or
+Release candidate: **covercount-explore 1.0.6**. Server baseline: **0.5.1** or
 compatible later. This document prepares submission; it does not record publication.
 
 Version **1.0.5** shortens every review scenario (`description`) to at most 200
@@ -84,7 +84,7 @@ external geocoding. Public cache/budget housekeeping creates no guest bookings.
 
 ## OpenAI release procedure
 
-Upload **`covercount-explore-openai-1.0.5.zip`** as the complete plugin in the OpenAI
+Upload **`covercount-explore-openai-1.0.6.zip`** as the complete plugin in the OpenAI
 plugin portal. The initial upload includes all three skills and the production MCP
 connection. Choose the verified developer identity, review Metadata & Skills,
 then connect the anonymous server under MCPs, complete domain verification and

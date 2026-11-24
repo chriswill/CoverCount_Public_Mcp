@@ -29,7 +29,7 @@ Clients without a gallery use the same listing link to view photos.
 
 ## Install and review
 
-Version **1.0.5**, release candidate, with all three skills at **0.2.1**.
+Version **1.0.6**, release candidate, with all three skills at **0.2.1**.
 Use MCP server **0.5.1** or a compatible later version at
 `https://mcp.covercount.io/explore/mcp`. Client installation, skill activation and
 hosted acceptance are recorded separately; local package validation does not prove them.
@@ -62,10 +62,10 @@ This repository is the canonical Explore client source. Maintain skills only in
 `skills/`. The workspace builder reads this checkout and generates packages in
 `../resources/dist`; it does not synchronize maintained copies elsewhere.
 
-For development, install `requirements-dev.txt` in a virtual environment, run
-`python scripts/validate_plugin.py` and `python -m unittest discover -s tests -v`,
-then run `python ../resources/scripts/build-covercount-explore-plugin.py` from this
-checkout in the full workspace. The builder checks tool references against the
+Run `claude plugin validate . --strict` from this checkout. In the full workspace,
+the Explore validator, tests and development dependencies live under
+`resources/scripts/explore_validation/`. Run the release builder with
+`python resources/scripts/build-covercount-explore-plugin.py` from the workspace root. The builder checks tool references against the
 server catalog and emits separate OpenAI, Claude and skill-upload archives plus
 a SHA-256 inventory. It never installs or publishes anything.
 
