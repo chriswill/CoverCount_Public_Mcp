@@ -19,7 +19,7 @@ results; "Napa" did not resolve and Sonoma returned no places. No skills, tools 
 server behavior change.
 
 Version 1.0.3 changes no skills, tools or server behavior. It republishes the
-`"icon": "./assets/icon.png"` Claude manifest declaration, added after the live
+Claude manifest declaration, added after the live
 1.0.2 directory scan, so the Anthropic listing can pick up the emblem.
 
 Version 1.0.2 updated all three skills to **0.2.1** with gallery-first photo
